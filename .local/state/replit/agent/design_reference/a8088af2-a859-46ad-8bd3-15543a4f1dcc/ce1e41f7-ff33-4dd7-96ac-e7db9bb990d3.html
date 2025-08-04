@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaxAI Assistant - Professional Tax Consultation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#EFF6FF',
+                            100: '#DBEAFE',
+                            500: '#3B82F6',
+                            600: '#2563EB',
+                            700: '#1D4ED8',
+                        },
+                        slate: {
+                            50: '#F8FAFC',
+                            100: '#F1F5F9',
+                            200: '#E2E8F0',
+                            300: '#CBD5E1',
+                            400: '#94A3B8',
+                            500: '#64748B',
+                            600: '#475569',
+                            700: '#334155',
+                            800: '#1E293B',
+                            900: '#0F172A',
+                        }
+                    },
+                    animation: {
+                        'typing': 'typing 1.5s infinite',
+                        'fade-in': 'fadeIn 0.3s ease-in-out',
+                    },
+                    keyframes: {
+                        typing: {
+                            '0%, 60%': { opacity: 0 },
+                            '30%': { opacity: 1 },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: 0, transform: 'translateY(10px)' },
+                            '100%': { opacity: 1, transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        };
+    </script>
+</head>
+<body class="font-inter bg-slate-50 min-h-screen">
+    <!-- @COMPONENT: ChatContainer [main chat interface] -->
+    <div class="flex flex-col h-screen max-w-4xl mx-auto bg-white shadow-xl">
+        <!-- @COMPONENT: ChatHeader [header with branding and status] -->
+        <header class="bg-primary-600 text-white px-6 py-4 shadow-lg">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
+                        <i class="fas fa-calculator text-white text-lg"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-semibold">TaxAI Assistant</h1>
+                        <p class="text-primary-100 text-sm">Professional Tax Consultation</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                    <span class="text-primary-100 text-sm">Online</span>
+                </div>
+            </div>
+        </header>
+        <!-- @END_COMPONENT: ChatHeader -->
+
+        <!-- @COMPONENT: ChatMessages [scrollable message area] -->
+        <div id="chatMessages" class="flex-1 overflow-y-auto p-6 space-y-4 bg-slate-50">
+            <!-- Welcome Message -->
+            <div class="flex items-start space-x-3 animate-fade-in">
+                <div class="w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-robot text-white text-sm"></i>
+                </div>
+                <div class="bg-white rounded-lg px-4 py-3 max-w-xs sm:max-w-md shadow-sm border border-slate-200">
+                    <p class="text-slate-700">👋 Hello! I'm your AI tax assistant. I can help you with tax questions, deductions, filing requirements, and more. What would you like to know?</p>
+                    <span class="text-xs text-slate-400 mt-2 block">Just now</span>
+                </div>
+            </div>
+
+            <!-- Sample conversation to demonstrate functionality -->
+            <div class="flex items-start space-x-3 justify-end animate-fade-in">
+                <div class="bg-primary-600 text-white rounded-lg px-4 py-3 max-w-xs sm:max-w-md">
+                    <p data-mock="true">What deductions can I claim for my home office?</p>
+                    <span class="text-xs text-primary-200 mt-2 block">2 min ago</span>
+                </div>
+                <div class="w-8 h-8 bg-slate-300 rounded-full flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-user text-slate-600 text-sm"></i>
+                </div>
+            </div>
+
+            <div class="flex items-start space-x-3 animate-fade-in">
+                <div class="w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-robot text-white text-sm"></i>
+                </div>
+                <div class="bg-white rounded-lg px-4 py-3 max-w-xs sm:max-w-lg shadow-sm border border-slate-200">
+                    <p class="text-slate-700" data-mock="true">Great question! For home office deductions, you have two main options:</p>
+                    <div class="mt-3 space-y-2 text-slate-700">
+                        <p data-mock="true"><strong>1. Simplified Method:</strong> Deduct $5 per square foot (up to 300 sq ft, max $1,500)</p>
+                        <p data-mock="true"><strong>2. Actual Expense Method:</strong> Calculate percentage of home used for business</p>
+                    </div>
+                    <div class="mt-3 pt-3 border-t border-slate-100">
+                        <p class="text-sm text-slate-600" data-mock="true">📋 Helpful resources:</p>
+                        <ul class="mt-2 space-y-1">
+                            <li>
+                                <a href="#" class="text-primary-600 hover:text-primary-700 text-sm underline" data-implementation="Link to IRS Publication 587">
+                                    <i class="fas fa-external-link-alt text-xs mr-1"></i>
+                                    IRS Publication 587 - Business Use of Home
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="text-primary-600 hover:text-primary-700 text-sm underline" data-implementation="Link to home office calculator">
+                                    <i class="fas fa-calculator text-xs mr-1"></i>
+                                    Home Office Deduction Calculator
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <span class="text-xs text-slate-400 mt-3 block">2 min ago</span>
+                </div>
+            </div>
+
+            <div class="flex items-start space-x-3 justify-end animate-fade-in">
+                <div class="bg-primary-600 text-white rounded-lg px-4 py-3 max-w-xs sm:max-w-md">
+                    <p data-mock="true">Can I deduct business meals in 2024?</p>
+                    <span class="text-xs text-primary-200 mt-2 block">1 min ago</span>
+                </div>
+                <div class="w-8 h-8 bg-slate-300 rounded-full flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-user text-slate-600 text-sm"></i>
+                </div>
+            </div>
+
+            <div class="flex items-start space-x-3 animate-fade-in">
+                <div class="w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-robot text-white text-sm"></i>
+                </div>
+                <div class="bg-white rounded-lg px-4 py-3 max-w-xs sm:max-w-lg shadow-sm border border-slate-200">
+                    <p class="text-slate-700" data-mock="true">Yes! For 2024, business meal deductions are generally 50% of the cost, but there are some important exceptions:</p>
+                    <div class="mt-3 space-y-2 text-slate-700">
+                        <div class="bg-green-50 border border-green-200 rounded-lg p-3" data-mock="true">
+                            <p class="text-green-800"><strong>🍽️ 100% Deductible:</strong></p>
+                            <ul class="mt-1 text-sm text-green-700 space-y-1">
+                                <li>• Office snacks and meals for employees</li>
+                                <li>• Company picnics and holiday parties</li>
+                                <li>• Meals during business travel</li>
+                            </ul>
+                        </div>
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-3" data-mock="true">
+                            <p class="text-blue-800"><strong>📊 50% Deductible:</strong></p>
+                            <ul class="mt-1 text-sm text-blue-700 space-y-1">
+                                <li>• Client entertainment meals</li>
+                                <li>• Business meetings at restaurants</li>
+                                <li>• Networking event meals</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mt-3 pt-3 border-t border-slate-100">
+                        <p class="text-sm text-slate-600" data-mock="true">📋 Keep detailed records:</p>
+                        <ul class="mt-2 space-y-1">
+                            <li>
+                                <a href="#" class="text-primary-600 hover:text-primary-700 text-sm underline" data-implementation="Link to meal deduction tracker">
+                                    <i class="fas fa-file-alt text-xs mr-1"></i>
+                                    Business Meal Expense Tracker Template
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="text-primary-600 hover:text-primary-700 text-sm underline" data-implementation="Link to IRS guidelines">
+                                    <i class="fas fa-external-link-alt text-xs mr-1"></i>
+                                    IRS Guidelines for Business Meals
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <span class="text-xs text-slate-400 mt-3 block">Just now</span>
+                </div>
+            </div>
+
+            <!-- Typing indicator (hidden by default) -->
+            <div id="typingIndicator" class="flex items-start space-x-3 hidden">
+                <div class="w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-robot text-white text-sm"></i>
+                </div>
+                <div class="bg-white rounded-lg px-4 py-3 shadow-sm border border-slate-200">
+                    <div class="flex space-x-1">
+                        <div class="w-2 h-2 bg-slate-400 rounded-full animate-typing"></div>
+                        <div class="w-2 h-2 bg-slate-400 rounded-full animate-typing" style="animation-delay: 0.2s;"></div>
+                        <div class="w-2 h-2 bg-slate-400 rounded-full animate-typing" style="animation-delay: 0.4s;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- @END_COMPONENT: ChatMessages -->
+
+        <!-- @COMPONENT: ChatInput [message input area] -->
+        <div class="border-t border-slate-200 bg-white p-4">
+            <form id="chatForm" class="flex space-x-3" data-event="submit:handleSendMessage">
+                <div class="flex-1 relative">
+                    <input
+                        type="text"
+                        id="messageInput"
+                        placeholder="Ask me anything about taxes..."
+                        class="w-full px-4 py-3 pr-12 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                        data-bind="userMessage"
+                        data-mock="true"
+                    />
+                    <div class="absolute right-3 top-1/2 transform -translate-y-1/2">
+                        <i class="fas fa-paperclip text-slate-400 hover:text-slate-600 cursor-pointer"></i>
+                    </div>
+                </div>
+                <button
+                    type="submit"
+                    class="bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-lg transition-colors flex items-center space-x-2 font-medium"
+                    data-event="click:handleSendMessage"
+                    data-implementation="Should validate input and send message"
+                >
+                    <span class="hidden sm:inline">Send</span>
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </form>
+            
+            <!-- Quick suggestions -->
+            <div class="mt-3 flex flex-wrap gap-2">
+                <button class="text-xs px-3 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-full transition-colors" data-mock="true">
+                    Tax deadlines 2024
+                </button>
+                <button class="text-xs px-3 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-full transition-colors" data-mock="true">
+                    Standard deduction
+                </button>
+                <button class="text-xs px-3 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-full transition-colors" data-mock="true">
+                    Business expenses
+                </button>
+                <button class="text-xs px-3 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-full transition-colors" data-mock="true">
+                    Capital gains
+                </button>
+            </div>
+        </div>
+        <!-- @END_COMPONENT: ChatInput -->
+    </div>
+    <!-- @END_COMPONENT: ChatContainer -->
+
+    <script>
+        (function() {
+            // DOM elements
+            const chatMessages = document.getElementById('chatMessages');
+            const chatForm = document.getElementById('chatForm');
+            const messageInput = document.getElementById('messageInput');
+            const typingIndicator = document.getElementById('typingIndicator');
+
+            // Mock AI responses for demonstration
+            const mockResponses = [
+                {
+                    message: "I'd be happy to help with that! Tax laws can be complex, but I'll break it down for you.",
+                    links: [
+                        { text: "IRS Tax Guide", url: "#", icon: "fas fa-book" },
+                        { text: "Tax Calculator", url: "#", icon: "fas fa-calculator" }
+                    ]
+                },
+                {
+                    message: "Based on current tax regulations, here's what you need to know:",
+                    links: [
+                        { text: "Official IRS Publication", url: "#", icon: "fas fa-file-pdf" },
+                        { text: "Tax Planning Resources", url: "#", icon: "fas fa-chart-line" }
+                    ]
+                },
+                {
+                    message: "That's an excellent question! Let me provide you with the most up-to-date information:",
+                    links: [
+                        { text: "Tax Code Reference", url: "#", icon: "fas fa-gavel" },
+                        { text: "Professional Consultation", url: "#", icon: "fas fa-user-tie" }
+                    ]
+                }
+            ];
+
+            // Auto-scroll to bottom
+            function scrollToBottom() {
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            // Show typing indicator
+            function showTypingIndicator() {
+                typingIndicator.classList.remove('hidden');
+                scrollToBottom();
+            }
+
+            // Hide typing indicator
+            function hideTypingIndicator() {
+                typingIndicator.classList.add('hidden');
+            }
+
+            // Add message to chat
+            function addMessage(content, isUser = false, links = []) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `flex items-start space-x-3 animate-fade-in ${isUser ? 'justify-end' : ''}`;
+
+                const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+                if (isUser) {
+                    messageDiv.innerHTML = `
+                        <div class="bg-primary-600 text-white rounded-lg px-4 py-3 max-w-xs sm:max-w-md">
+                            <p data-mock="true">${content}</p>
+                            <span class="text-xs text-primary-200 mt-2 block">${timestamp}</span>
+                        </div>
+                        <div class="w-8 h-8 bg-slate-300 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-user text-slate-600 text-sm"></i>
+                        </div>
+                    `;
+                } else {
+                    const linksHtml = links.length > 0 ? `
+                        <div class="mt-3 pt-3 border-t border-slate-100">
+                            <p class="text-sm text-slate-600" data-mock="true">📋 Helpful resources:</p>
+                            <ul class="mt-2 space-y-1">
+                                ${links.map(link => `
+                                    <li>
+                                        <a href="${link.url}" class="text-primary-600 hover:text-primary-700 text-sm underline" data-implementation="Link to ${link.text}">
+                                            <i class="${link.icon} text-xs mr-1"></i>
+                                            ${link.text}
+                                        </a>
+                                    </li>
+                                `).join('')}
+                            </ul>
+                        </div>
+                    ` : '';
+
+                    messageDiv.innerHTML = `
+                        <div class="w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-robot text-white text-sm"></i>
+                        </div>
+                        <div class="bg-white rounded-lg px-4 py-3 max-w-xs sm:max-w-lg shadow-sm border border-slate-200">
+                            <p class="text-slate-700" data-mock="true">${content}</p>
+                            ${linksHtml}
+                            <span class="text-xs text-slate-400 mt-3 block">${timestamp}</span>
+                        </div>
+                    `;
+                }
+
+                chatMessages.appendChild(messageDiv);
+                scrollToBottom();
+            }
+
+            // Handle form submission
+            function handleSendMessage(e) {
+                e.preventDefault();
+                
+                const message = messageInput.value.trim();
+                if (!message) return;
+
+                // Add user message
+                addMessage(message, true);
+                messageInput.value = '';
+
+                // Show typing indicator
+                showTypingIndicator();
+
+                // Simulate AI response after delay
+                setTimeout(() => {
+                    hideTypingIndicator();
+                    const randomResponse = mockResponses[Math.floor(Math.random() * mockResponses.length)];
+                    addMessage(randomResponse.message, false, randomResponse.links);
+                }, 1500 + Math.random() * 1000); // Random delay between 1.5-2.5s
+
+                // TODO: Replace with actual API call
+                // API.sendMessage(message).then(response => {
+                //     hideTypingIndicator();
+                //     addMessage(response.message, false, response.links);
+                // });
+            }
+
+            // Handle quick suggestion clicks
+            function handleQuickSuggestion(e) {
+                if (e.target.tagName === 'BUTTON' && e.target.dataset.mock === 'true') {
+                    messageInput.value = e.target.textContent;
+                    messageInput.focus();
+                }
+            }
+
+            // Event listeners
+            chatForm.addEventListener('submit', handleSendMessage);
+            document.addEventListener('click', handleQuickSuggestion);
+            
+            // Handle Enter key in input
+            messageInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    handleSendMessage(e);
+                }
+            });
+
+            // Initialize with bottom scroll
+            scrollToBottom();
+
+            // Accessibility: Focus management
+            messageInput.focus();
+        })();
+    </script>
+</body>
+</html>
